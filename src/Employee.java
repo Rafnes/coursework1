@@ -37,6 +37,10 @@ public class Employee {
     }
 
     public void setSalary(int salary) {
+        if (salary <= 0) {
+            System.out.println("Нельзя установить ЗП значение 0 или меньше");
+            return;
+        }
         this.salary = salary;
     }
 

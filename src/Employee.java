@@ -7,12 +7,22 @@ public class Employee {
 
     public Employee(String name, int department, int salary) {
         this.name = name;
+        if (department <= 0 || department > 5) {
+            throw new IllegalArgumentException("Некорректный номер отдела");
+        }
         this.department = department;
+        if (salary <= 0) {
+            throw new IllegalArgumentException("Некорректная зарплата");
+        }
         this.salary = salary;
         this.id = ++idCounter;
     }
 
-    public String getFirstName() {
+    public static int getIdCounter() {
+        return idCounter;
+    }
+
+    public String getName() {
         return name;
     }
 
@@ -54,64 +64,15 @@ public class Employee {
         if (this == obj) {
             return true;
         }
-        if (obj.getClass() != this.getClass() || obj == null) {
+        if (obj == null || obj.getClass() != this.getClass()) {
             return false;
         }
         Employee employee = (Employee) obj;
-        return this.id == employee.id;
+        return this.id == employee.id && this.name.equals(employee.name) && this.salary == employee.salary;
     }
 
     @Override
     public int hashCode() {
         return java.util.Objects.hash(name, department, salary, id);
-    }
-
-    public static void printAllEmployees(Employee[] employees) {
-        System.out.println("Список всех сотрудников: ");
-        for (int i = 0; i < idCounter; i++) {
-            System.out.println(employees[i]);
-        }
-    }
-
-    public static int getMonthlySalaryExpenses(Employee[] employees) {
-        int total = 0;
-        for (int i = 0; i < employees.length - 1; i++) {
-            total += employees[i].salary;
-        }
-        return total;
-    }
-
-    public static Employee getMinSalaryEmployee(Employee[] employees) {
-        int min = 1_000_000_000;
-        int minSalaryIndex = 0;
-        for (int i = 0; i < employees.length - 1; i++) {
-            if (employees[i].salary < min) {
-                min = employees[i].salary;
-                minSalaryIndex = i;
-            }
-        }
-        return employees[minSalaryIndex];
-    }
-
-    public static Employee getMaxSalaryEmployee(Employee[] employees) {
-        int max = 0;
-        int maxSalaryIndex = 0;
-        for (int i = 0; i < employees.length - 1; i++) {
-            if (employees[i].salary > max) {
-                max = employees[i].salary;
-                maxSalaryIndex = i;
-            }
-        }
-        return employees[maxSalaryIndex];
-    }
-
-    public static double getAverageSalaryExpenses(Employee[] employees) {
-        return (double) getMonthlySalaryExpenses(employees) / employees.length;
-    }
-
-    public static void printAllEmployeeNames(Employee[] employees) {
-        for (int i = 0; i < employees.length - 1; i++) {
-            System.out.println(employees[i].name);
-        }
     }
 }

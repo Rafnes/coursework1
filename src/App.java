@@ -1,4 +1,65 @@
 public class App {
+    public static void printAllEmployees(Employee[] employees) {
+        System.out.println("Список всех сотрудников: ");
+        for (int i = 0; i < getEmployeesAmount(employees); i++) {
+            System.out.println(employees[i]);
+        }
+    }
+
+    public static int getMonthlySalaryExpenses(Employee[] employees) {
+        int total = 0;
+        for (int i = 0; i < getEmployeesAmount(employees); i++) {
+            total += employees[i].getSalary();
+        }
+        return total;
+    }
+
+    public static Employee getMinSalaryEmployee(Employee[] employees) {
+        int min = employees[0].getSalary();
+        Employee employeeMinSalary = employees[0];
+        for (int i = 0; i < getEmployeesAmount(employees); i++) {
+            if (employees[i].getSalary() < min) {
+                min = employees[i].getSalary();
+                employeeMinSalary = employees[i];
+            }
+        }
+        return employeeMinSalary;
+    }
+
+    public static Employee getMaxSalaryEmployee(Employee[] employees) {
+        int max = employees[0].getSalary();
+        Employee employeeMaxSalary = employees[0];
+        for (int i = 0; i < getEmployeesAmount(employees); i++) {
+            if (employees[i].getSalary() > max) {
+                max = employees[i].getSalary();
+                employeeMaxSalary = employees[i];
+            }
+        }
+        return employeeMaxSalary;
+    }
+
+    public static double getAverageSalaryExpenses(Employee[] employees) {
+        return (double) getMonthlySalaryExpenses(employees) / employees.length;
+    }
+
+    public static void printAllEmployeeNames(Employee[] employees) {
+        System.out.println("ФИО всех сотрудников: ");
+        for (int i = 0; i < getEmployeesAmount(employees); i++) {
+            System.out.println(employees[i].getName());
+        }
+    }
+
+    public static int getEmployeesAmount(Employee[] employees) {
+        int total = 0;
+        for (int i = 0; i < employees.length; i++) {
+            if (employees[i] != null) {
+                total++;
+            }
+        }
+        return total;
+    }
+
+
     public static void main(String[] args) {
         Employee[] employees = new Employee[10];
         employees[0] = new Employee("Тымчук Алексей Владимирович", 1, 148000);
@@ -12,17 +73,16 @@ public class App {
         employees[8] = new Employee("Дроздов Николай Альбертович", 2, 72000);
 
 
-        Employee.printAllEmployees(employees);
+        printAllEmployees(employees);
 
-        System.out.println("Суммарно за месяц на ЗП тратится: " + Employee.getMonthlySalaryExpenses(employees));
+        System.out.println("Суммарно за месяц на ЗП тратится: " + getMonthlySalaryExpenses(employees));
 
-        System.out.println("Сотрудник с минимальной зарплатой: " + Employee.getMinSalaryEmployee(employees));
+        System.out.println("Сотрудник с минимальной зарплатой: " + getMinSalaryEmployee(employees));
 
-        System.out.println("Сотрудник с максимальной зарплатой: " + Employee.getMaxSalaryEmployee(employees));
+        System.out.println("Сотрудник с максимальной зарплатой: " + getMaxSalaryEmployee(employees));
 
-        System.out.println("Средняя зарплата: " + Employee.getAverageSalaryExpenses(employees));
+        System.out.println("Средняя зарплата: " + getAverageSalaryExpenses(employees));
 
-        System.out.println("ФИО всех сотрудников: ");
-        Employee.printAllEmployeeNames(employees);
+        printAllEmployeeNames(employees);
     }
 }
